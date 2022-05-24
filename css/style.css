@@ -1,0 +1,113 @@
+*{
+    box-sizing: border-box;
+}
+
+body{
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    flex-direction: column;
+}
+
+h1{
+    margin: 0;
+    font-size: 2rem;
+}
+
+span{
+    font-size: 1rem;
+    padding: .5rem;
+}
+
+button{
+    padding: .5rem;
+    margin-right: .5rem;
+}
+
+label{
+    font-size: 1rem;
+    margin-right: .5rem;
+}
+
+input{
+    padding: .2rem;
+    text-align: center;
+}
+
+.controls-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    background-color: #777;
+    width: 100%;
+    height: 2rem;
+    padding: 1.5rem;
+    color: white;
+}
+.grid-container{
+    display: inline-grid;
+    padding: 10px;
+    grid-template-columns: repeat(var(--width),20px);
+    grid-template-rows: repeat(var(--height),20px);
+    background-color: #777;
+    margin-bottom: 10rem;
+}
+
+.grid-container > * {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    border: 2px solid #BBB;
+}
+
+.grid-container > [data-status="empty"]{
+    background-color: grey;
+    cursor: pointer;
+}
+
+.grid-container > [data-status="wall"]{
+    background-color: brown;
+    cursor: pointer;
+    animation: growAndShrink .2s ease-in-out;
+}
+.grid-container > [data-status="empty"]:hover{
+    background-color: lightgray;
+    cursor: pointer;
+}
+
+.grid-container > [data-status="path"]{
+    background-color: blue;
+    animation: growAndShrink .5s ease-in-out;
+}
+
+.grid-container > [data-status="start"]{
+    background-color: green;
+}
+
+.grid-container > [data-status="target"]{
+    background-color: purple;
+    animation: growAndShrink .2s ease-in-out;
+}
+
+.grid-container > [data-status="tracked"]{
+    background-color: yellow;
+    animation: growAndShrink .2s ease-in-out;
+}
+
+@keyframes growAndShrink {
+    0%{
+        transform: scale(1);
+    }
+    50%{
+        transform: scale(1.5);
+    }
+    100%{
+        transform: scale(1);
+    }
+}
