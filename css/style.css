@@ -90,6 +90,7 @@ input{
     background-color: green;
 }
 
+
 .grid-container > [data-status="target"]{
     background-color: purple;
     animation: growAndShrink .2s ease-in-out;
@@ -106,8 +107,10 @@ input{
     }
     50%{
         transform: scale(1.5);
+        border-radius: 25%;
     }
     100%{
         transform: scale(1);
+        border-radius: 0px;
     }
 }

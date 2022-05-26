@@ -12,6 +12,6 @@ set with a hueristic using Euclidean distance as diagonals are permitted
 
 TODO:
 [] Different Algorithms to compare against one another
-[] Maze Generation to create random mazes for the algorithms to traverse
+[X] Maze Generation to create random mazes for the algorithms to traverse
 [] Error messaging should no path be avaliable 
 [] Better styling 

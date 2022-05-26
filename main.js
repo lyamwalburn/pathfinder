@@ -1,7 +1,8 @@
 import { aStar, resetPath} from './pathfinding.js'
+import { generateMaze } from './maze.js'
 
-export const BOARD_WIDTH = 30
-export const BOARD_HEIGHT = 20
+export const BOARD_WIDTH = 51
+export const BOARD_HEIGHT = 31
 export const NODE_STATUS = {
     EMPTY: 'empty',
     WALL: 'wall',
@@ -68,13 +69,14 @@ function createGrid(width,height){
            const nodeElement = document.createElement('div')
            nodeElement.dataset.status = NODE_STATUS.EMPTY
             const node = {
-                nodeElement,
-                x,
+                nodeElement,    
+                x,              //nodes x/y position in grid top left 0,0
                 y,
-                f: Infinity,
+                f: Infinity,    //computation values for pathfinding
                 g: Infinity,
                 h: Infinity,
-                parent: null,
+                parent: null,   //used to backtrack when finding path
+                visited: false, //used for maze generation
                 get(){
                     return this.nodeElement.dataset.status
                 },
@@ -137,6 +139,8 @@ grid.forEach( row => {
     })
 })
 
+generateMaze(grid,{x:0,y:0})
+
 //reset the grid to initial state
 function resetGrid(){
     resetPath()
@@ -148,8 +152,11 @@ function resetGrid(){
                 node.g =Infinity
                 node.h = Infinity
                 node.parent =  null
+                node.visited = false
             }
         })
     })
+    generateMaze(grid,{x:0,y:0})
+    console.log(grid)
 }
 
