@@ -1,7 +1,6 @@
 import { NODE_STATUS } from "./main.js";
 import { BOARD_WIDTH,BOARD_HEIGHT } from "./main.js";
 export function generateMaze(grid,startPos){
-    //return grid setup as a maze
     fillGridWithWalls(grid,startPos) 
     setTimeout(() => {
         makeMazePath(grid,startPos)

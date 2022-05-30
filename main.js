@@ -134,6 +134,8 @@ grid.forEach( row => {
                     lastTarget.dataset.status = NODE_STATUS.EMPTY
                 }
                 node.set(NODE_STATUS.TARGET)
+                xEndInput.value = node.x
+                yEndInput.value = node.y
             }
         })
     })
