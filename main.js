@@ -1,8 +1,8 @@
 import { aStar, resetPath} from './pathfinding.js'
 import { generateMaze } from './maze.js'
 
-export const BOARD_WIDTH = 51
-export const BOARD_HEIGHT = 31
+export const BOARD_WIDTH = 41
+export const BOARD_HEIGHT = 21
 export const NODE_STATUS = {
     EMPTY: 'empty',
     WALL: 'wall',
@@ -49,7 +49,7 @@ const startButton = document.querySelector('#start').addEventListener('click',()
     aStar(grid)
 })
 const resetButton = document.querySelector('#reset').addEventListener('click',resetGrid)
-
+const mazeButton = document.querySelector('#maze').addEventListener('click',createMaze)
 //Grid Setup
 const grid = createGrid(BOARD_WIDTH,BOARD_HEIGHT)
 const gridElement = document.querySelector('.grid-container')
@@ -139,8 +139,6 @@ grid.forEach( row => {
     })
 })
 
-generateMaze(grid,{x:0,y:0})
-
 //reset the grid to initial state
 function resetGrid(){
     resetPath()
@@ -156,7 +154,10 @@ function resetGrid(){
             }
         })
     })
-    generateMaze(grid,{x:0,y:0})
-    console.log(grid)
+    
 }
 
+function createMaze(){
+    resetGrid()
+    generateMaze(grid,startPosition)
+}

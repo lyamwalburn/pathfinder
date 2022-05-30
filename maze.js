@@ -2,50 +2,64 @@ import { NODE_STATUS } from "./main.js";
 import { BOARD_WIDTH,BOARD_HEIGHT } from "./main.js";
 export function generateMaze(grid,startPos){
     //return grid setup as a maze
-    fillGridWithWalls(grid)
+    fillGridWithWalls(grid,startPos) 
+    setTimeout(() => {
+        makeMazePath(grid,startPos)
+    }, BOARD_WIDTH  * 20);
+    //ensureTargetPath() -- make sure at least one of the targets neighbours is empty TODO
+}
+
+function makeMazePath(grid,startPos){
     let stack = []
-    //Choose the initial cell, mark it as visited and push it to the stack    
-    grid[startPos.y][startPos.x].visited = true
-    stack.push(grid[startPos.y][startPos.x])
-    //While the stack is not empty
-     while(stack.length >0){
-        // Pop a cell from the stack and make it a current cell
-        let current = stack.pop()
-        let neighbours = getUnvisitedNeighbours(current,grid)
-        //If the current cell has any neighbours which have not been visited
-         if(neighbours.length > 0){
-            //Push the current cell to the stack
-            stack.push(current)
-            //Choose one of the unvisited neighbours
-            let i = Math.floor(Math.random()*neighbours.length)
-            //Remove the wall between the current cell and the chosen cell
-            removeWallBetween(current,neighbours[i],grid)
-            //Mark the chosen cell as visited and push it to the stack
-            neighbours[i].visited = true
-            neighbours[i].set(NODE_STATUS.EMPTY)
-            stack.push(neighbours[i])
-        }
-     }
+    // Choose the initial cell, mark it as visited and push it to the stack    
+     grid[startPos.y][startPos.x].visited = true
+     stack.push(grid[startPos.y][startPos.x])
+     //While the stack is not empty
+     let k = 0
+      while(stack.length >0){
+         // Pop a cell from the stack and make it a current cell
+         let current = stack.pop()
+         let neighbours = getUnvisitedNeighbours(current,grid)
+         //If the current cell has any neighbours which have not been visited
+          if(neighbours.length > 0){
+             //Push the current cell to the stack
+             stack.push(current)
+             //Choose one of the unvisited neighbours
+             let i = Math.floor(Math.random()*neighbours.length)
+             //Remove the wall between the current cell and the chosen cell
+             setTimeout(() => {
+                removeWallBetween(current,neighbours[i],grid)
+             }, k * 10);
+             
+             //Mark the chosen cell as visited and push it to the stack
+             neighbours[i].visited = true
+             if(neighbours[i].get() != NODE_STATUS.TARGET){
+                neighbours[i].set(NODE_STATUS.EMPTY)
+             }
+             stack.push(neighbours[i])
+             k++
+         }
+      }
 }
 
 function fillGridWithWalls(grid){
     //fill everytile in grid as wall bar start and target
-
-    //TODO start at 0,0 only make odd rows and cols walls
-    grid.forEach(row => {
-        row.forEach( n=> {
-            if(n.get() === NODE_STATUS.EMPTY){
-                if(n.x % 2 != 0 ){
-                    n.set(NODE_STATUS.WALL)
-                    n.visited = true
-                }
-                if(n.y % 2 != 0 ){
-                    n.set(NODE_STATUS.WALL)
-                    n.visited = true
-                }
-            }
+    grid.forEach(row => {    
+            row.forEach( (n,i)=> {
+                setTimeout(() => {
+                    if(n.get() === NODE_STATUS.EMPTY ){
+                        if(n.x % 2 != 0 ){
+                            n.set(NODE_STATUS.WALL)
+                            n.visited = true
+                        }
+                        if(n.y % 2 != 0 ){
+                            n.set(NODE_STATUS.WALL)
+                            n.visited = true
+                        }
+                    }
+                }, 15 * i)
+            })
         })
-    })
 }
 
 function removeWallBetween(a,b,grid){
@@ -54,28 +68,28 @@ function removeWallBetween(a,b,grid){
     if(xdiff < 0){
         if(a.x < BOARD_WIDTH-1){
             grid[a.y][a.x+1].set(NODE_STATUS.EMPTY)
-            grid[a.y][a.x+1].visited = true
+            //grid[a.y][a.x+1].visited = true
         }
             
     }
     if(xdiff > 0){
         if(a.x > 0){
             grid[a.y][a.x-1].set(NODE_STATUS.EMPTY)
-           // grid[a.y][a.x-1].visited = true
+           // grid[a.y][a.x+1].visited = true
         }
             
     }
     if(ydiff < 0){
         if(a.y < BOARD_HEIGHT-1){
             grid[a.y+1][a.x].set(NODE_STATUS.EMPTY)
-           // grid[a.y+1][a.x].visited = true
+           // grid[a.y][a.x+1].visited = true
         }
             
     }
     if(ydiff > 0){
         if(a.y > 0){
             grid[a.y-1][a.x].set(NODE_STATUS.EMPTY)
-           // grid[a.y-1][a.x].visited = true
+          //  grid[a.y][a.x+1].visited = true
         }
             
     }
