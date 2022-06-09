@@ -1,4 +1,4 @@
-import { aStar, resetPath} from './pathfinding.js'
+import { aStar, resetPath, sample} from './pathfinding.js'
 import { generateMaze } from './maze.js'
 
 export const BOARD_WIDTH = 41
@@ -11,6 +11,7 @@ export const NODE_STATUS = {
     PATH: 'path',
     TRACKED: 'tracked'
 }
+
 const startPosition = {
     x: 0,
     y: 0
@@ -45,11 +46,33 @@ yStartInput.addEventListener('change',e =>{
     }
     grid[startPosition.y][startPosition.x].set(NODE_STATUS.START)
 })
-const startButton = document.querySelector('#start').addEventListener('click',()=>{
-    aStar(grid)
-})
+
 const resetButton = document.querySelector('#reset').addEventListener('click',resetGrid)
 const mazeButton = document.querySelector('#maze').addEventListener('click',createMaze)
+let currentAlgorithm = 'A*'
+const algorithmButton = document.querySelector('#start')
+const dropChoices = document.querySelector('.dropdown-content').getElementsByTagName('span')
+for(let i=0;i<dropChoices.length;i++){
+    dropChoices[i].addEventListener('click',()=>{
+        algorithmButton.innerText = dropChoices[i].innerText
+        currentAlgorithm = dropChoices[i].innerText
+        startAlgorithm()
+    })
+}
+algorithmButton.addEventListener('click',startAlgorithm)
+
+ function startAlgorithm(){
+    switch (currentAlgorithm) {
+        case 'A*':
+             aStar(grid) 
+             break
+        case 'Sample':
+             sample(grid,{x: xEndInput.value, y: yEndInput.value})
+             break
+    }
+ }
+
+console.log(dropChoices)
 //Grid Setup
 const grid = createGrid(BOARD_WIDTH,BOARD_HEIGHT)
 const gridElement = document.querySelector('.grid-container')
@@ -75,6 +98,7 @@ function createGrid(width,height){
                 f: Infinity,    //computation values for pathfinding
                 g: Infinity,
                 h: Infinity,
+                counter: Infinity,
                 parent: null,   //used to backtrack when finding path
                 visited: false, //used for maze generation
                 get(){
@@ -151,6 +175,7 @@ function resetGrid(){
                 node.f = Infinity
                 node.g =Infinity
                 node.h = Infinity
+                node.counter = Infinity
                 node.parent =  null
                 node.visited = false
             }
@@ -161,5 +186,5 @@ function resetGrid(){
 
 function createMaze(){
     resetGrid()
-    generateMaze(grid,startPosition)
+    generateMaze(grid,startPosition,{x: xEndInput.value, y: yEndInput.value})
 }

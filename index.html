@@ -11,8 +11,14 @@
 <body>
     <h1>Pathfinder</h1>
     <div class="controls-container">
-        <button id="start">Find Target</button>
-        <button id="reset">Reset</button>
+        <div class="dropdown">
+            <Button id="start">A*</Button>
+            <div class="dropdown-content">
+                <span>A*</span>
+                <span>Sample</span>
+            </div>
+        </div>
+        <button id="reset">Clear Grid</button>
         <button id="maze">Create Maze</button>
         <span>Start Position</span>
         <label for="start-x">X:</label>
@@ -24,6 +30,7 @@
         <input type="number" id="end-x" name="end-x" min="0">
         <label for="start-x">Y:</label>
         <input type="number" id="end-y" name="end-y" min="0">
+        
     </div>
     
     <div class="grid-container">

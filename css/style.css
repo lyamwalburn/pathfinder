@@ -47,12 +47,58 @@ input{
     padding: 1.5rem;
     color: white;
 }
+
+#start{
+    background-color: #4CAF50;
+    text-align: left;
+    min-width: 5rem;
+    color: white;
+    padding: .5rem;
+    margin-left: .5rem;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown{
+    position: relative;
+    display: inline-block;
+    font-size: 1rem;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    margin-left: .5rem;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    list-style: none;
+}
+
+.dropdown-content span {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content span:hover {background-color: #f1f1f1}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+.dropdown:hover #start {
+    background-color: #3e8e41;
+}
+
 .grid-container{
     display: inline-grid;
     padding: 10px;
     grid-template-columns: repeat(var(--width),20px);
     grid-template-rows: repeat(var(--height),20px);
-    background-color: #777;
+    background-color: #95736A;
     margin-bottom: 10rem;
 }
 
@@ -67,12 +113,13 @@ input{
 }
 
 .grid-container > [data-status="empty"]{
-    background-color: grey;
+    background-color: #A9A9A9;
     cursor: pointer;
 }
 
 .grid-container > [data-status="wall"]{
-    background-color: brown;
+    background-color: #95736A;
+    border: none;
     cursor: pointer;
     animation: growAndShrink .2s ease-in-out;
 }
@@ -82,23 +129,27 @@ input{
 }
 
 .grid-container > [data-status="path"]{
-    background-color: blue;
-    animation: growAndShrink .5s ease-in-out;
+    background-color: #347BCB;
+    border: 1px solid #5C95D6;
+    animation: trackPath .3s ease-in-out;
 }
 
 .grid-container > [data-status="start"]{
-    background-color: green;
+    background-color: #34CB39;
+    border: 1px solid #5DD561;
 }
 
 
 .grid-container > [data-status="target"]{
-    background-color: purple;
+    background-color: #CB34C6;
+    border: 1px solid #D55DD1;
     animation: growAndShrink .2s ease-in-out;
 }
 
 .grid-container > [data-status="tracked"]{
-    background-color: yellow;
-    animation: growAndShrink .2s ease-in-out;
+    background-color: #F6E209;
+    border: 1px solid #F7E83B;
+    animation: trackedAnimation .5s ease-in-out;
 }
 
 @keyframes growAndShrink {
@@ -106,7 +157,40 @@ input{
         transform: scale(1);
     }
     50%{
+        transform: scale(1.75);
+        border-radius: 25%;
+    }
+    100%{
+        transform: scale(1);
+        border-radius: 0px;
+    }
+}
+
+@keyframes trackedAnimation {
+    0%{
+        transform: scale(.5);
+        border-radius: 50%;
+    }
+    25%{
+        transform: scale(.5);
+        border-radius: 25%;
+    }
+    50%{
         transform: scale(1.5);
+        border-radius: 0px;
+    }
+    100%{
+        transform: scale(1);
+        border-radius: 0px;
+    }
+}
+
+@keyframes trackPath {
+    0%{
+        transform: scale(1);
+    }
+    50%{
+        transform: scale(1.75);
         border-radius: 25%;
     }
     100%{

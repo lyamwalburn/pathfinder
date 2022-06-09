@@ -19,4 +19,6 @@ TODO:
 [X] Basic animation of maze generating
 []  Error messaging should no path be avaliable 
 []  Better styling 
-[]  Fix issue with startPos & targetPos being enclosed by maze if on odd tile
+[X] Fix issue with startPos & targetPos being enclosed by maze if on odd tile
+[]  Fix issue where maze does not generate paths if started on an odd tile
+[]  Tidy code in maze generation 
